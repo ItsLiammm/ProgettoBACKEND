@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YOUR PLAYLIST</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="box">
+        <h2>{% if object %}EDIT{% else %}CREATE NEW{% endif %} PLAYLIST</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.name.errors %}
+                <div style="color: red;">{{ form.name.errors }}</div>
+            {% endif %}
+            
+            <p>PLAYLIST NAME: {{ form.name }}</p>
+            <p>SELECT GENRE:
+                <select id="genre-filter" class="search-input">
+                    <option value="">All Genres</option>       
+                    {% for genere in generi %}
+                        <option value="{{ genere.name }}">{{ genere.name }}</option>
+                    {% endfor %}        
+                </select>
+            </p>
+            <p>SELECT SONGS:
+                <input type="text" id="song-search" placeholder="What are you looking for?" class="search-input">   
+            </p>
+            
+        
+            <div id="songs-list">{{ form.songs }}</div>
+            
+            <button type="submit" class="bottone">SAVE PLAYLIST</button>
+        </form>
+        <p><a href="{% url 'home' %}" id="cancella">CANCEL</a></p>
+    </div>
+    <script src="{% static 'search.js' %}"></script>
+</body>
+</html>

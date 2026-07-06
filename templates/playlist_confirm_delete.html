@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DELETE PLAYLIST</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="box-delete">
+        <h2>ARE YOU SURE YOU WANT TO DELETE THIS PLAYLIST: "{{ object.name }}"?</h2>
+        <p><strong>SONGS IN THE PLAYLIST:</strong></p>
+        <ul class="song-list">
+            {% for song in playlist.songs.all %}
+                <li><strong>{{ song.title }}</strong> - {{ song.artist }}</li>
+            {% empty %}
+                <li>THIS PLAYLIST IS EMPTY</li>
+            {% endfor %}
+        </ul>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">DELETE</button>
+            <a href="{% url 'home' %}">CANCEL</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I AM MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'search_home.js' %}" defer></script>
+</head>
+<body>
+    <header class="navContainer">
+        <div class="nav-left">
+            <button id="apriMenu" class="btn-hamburger" aria-label="Apri menù a tendina">
+                    <div id="navButton">
+                            <svg class="iconaHam" viewBox="0 0 24 24">
+                                    <path d="M4 6h16 M4 12h16 M4 18h16"></path>
+                            </svg>
+                    </div>
+            </button>
+
+            <div class="contRic">
+                <input type="text" id="main-search" class="search-input-home" placeholder="What you wanna listen to?" aria-label="Cerca">
+                <button class="btnRic" aria-label="Cerca">
+                    <svg class="icona-lente" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <line x1="16" y1="16" x2="22" y2="22"></line>
+                    </svg>
+                </button>
+                <div id="search-results-dropdown" class="search-dropdown" style="display: none"></div>
+            </div>
+        </div>
+        <a href="/" class="Title">
+            I AM MUSIC
+        </a>
+        <div class="log">
+            {% if user.is_authenticated %}
+                {% if user.role == 'curator' %}
+                    <a href="{% url 'curator_dashboard' %}" class="btn-management">MANAGE LIBRARY</a>
+                {% endif %}
+                <div><strong>{{ user.username }}</strong> ({{ user.get_role_display }})</div> 
+                <a href="{% url 'logout' %}">LOGOUT</a>
+            {% else %}
+                <div><strong>You are not logged in: </strong></div>
+                <a href="{% url 'login' %}" id="login" >LOGIN</a>
+            {% endif %}
+        </div>
+    </header>
+    
+    <div class="main-container">
+    
+        <aside class="sidebar-left">
+            <h2 class="sidebar-title">NEWS</h2>
+    
+            <div class="news-container">
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">New Album On The Way</h4>
+                        <p class="news-subtitle">The artist officially set the relase date for the next friday.</p>
+                    </article> 
+                </a>
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">Rap Artist Arrested In Miami</h4>
+                        <p class="news-subtitle">The artist has been arrested in Miami for illegal possession of Marijuana.</p>
+                    </article> 
+                </a>
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">Top Selling Albums</h4>
+                        <p class="news-subtitle">Take a look at this week top selling albums.</p>
+                    </article> 
+                </a>
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">Artist Spotted At NBA Game</h4>
+                        <p class="news-subtitle">Artist spotted courtside at the latest game supporting his favorite team.</p>
+                    </article> 
+                </a>
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">Artist Start Dating Raising Movie Star</h4>
+                        <p class="news-subtitle">Artist spotted after the show out of a hotel with an actor.</p>
+                    </article> 
+                </a>
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">The Artist Is Being Cancelled</h4>
+                        <p class="news-subtitle">Legendary artist is being cancelled following latest racist statement.</p>
+                    </article> 
+                </a>
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">New Artist Merch Collection</h4>
+                        <p class="news-subtitle">New merch collection following the release of the album.</p>
+                    </article> 
+                </a>
+                <a href="/">
+                    <article class="news-item">
+                        <h4 class="news-title">Announced New World Tour</h4>
+                        <p class="news-subtitle">Multi-platinum artist announced new world tour for his latest album.</p>
+                    </article> 
+                </a>
+            </div>
+        </aside>
+
+        <main class="content-center">
+
+            <section class="music-section">
+                <h2>RECENTLY PLAYED</h2>
+                <div class="cards-container sub-rows-thin">
+                    {% for playlist in playlists %}
+                    <a href="/" class="card-thin">
+                        <img src="{% static 'images/coverrrrsml.png' %}" alt="Cover">
+                        {{ playlist.name }}
+                    </a>
+                    {% empty %}
+                    <p>No playlist available.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="cards-container">
+                        {% for song in recently_played %}
+                        <a href="/" class="card">
+                            <img src="{% static 'images/cover80.png' %}" alt="Cover">
+                            <h4>{{ song.title }}</h4>
+                            <p>{{ song.artist }}</p>
+                        </a>
+                        
+                        {% empty %}
+                        <p>No song in the database</p>
+                        
+                        {% endfor %}
+                        
+                </div>
+
+             </section>
+
+            <section class="music-section">
+                {% if user.is_authenticated %}
+                    <h2>MADE 4 U, {{ user.username | upper }}</h2>
+                {% else %}
+                <h2>YOU MAY LIKE</h2>
+                {% endif %}
+                <div class="cards-container">
+                    {% for song in raccomandazioni %}
+                        <a href="/" class="card">
+                            <img src="{% static 'images/cover80.png' %}" alt="Cover">
+                            <h4>{{ song.title }}</h4>
+                            <p>{{ song.artist }}</p>
+                        </a>
+                        
+                        {% empty %}
+                        <p>No song in the database</p>                       
+                        {% endfor %}
+                      
+                </div>
+            </section>
+
+            <section class="music-section">
+                <h2>
+                    MADE BY U
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'playlist_create' %}" id="aggiungi">+<span class="aggiunta">CREATE NEW PLAYLIST</span></a>
+                    {% endif %}
+                </h2>
+                <div class="cards-container">
+                    {% for playlist in playlists %}
+                    <div class="card">
+                        <img src="{% static 'images/cover80.png' %}" alt="Cover">
+                        <h4>{{ playlist.name }}</h4>
+                        <p>Made by {{ playlist.user.username }}</p>
+
+                        {% if user == playlist.user %}
+                            <div style="margin-top: 10px; font-size: 0.8rem;">
+                                <a href="{% url 'playlist_update' playlist.id %}" id="modifica">EDIT</a> | 
+                                <a href="{% url 'playlist_delete' playlist.id %}" id="elimina">DELETE</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p>No playlist available.</p>
+                    {% endfor %}             
+                </div>
+            </section>
+
+        </main>
+
+        
+
+    </div>
+
+</body>
+</html>

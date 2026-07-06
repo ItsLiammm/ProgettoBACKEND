@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CURATOR DASHBOARD</title>
+    <style>
+        body { padding: 40px; background-color: #ffffff; font-family: 'Helvetica Neue', sans-serif;}
+        .dashboard-container { max-width: 800px; margin: 0 auto; border: 1px solid #000; background: #fff; padding: 30px; }
+        .dashboard-header { text-align: center; margin-bottom: 30px; }
+        .column-header { text-align: center; margin-bottom: 10px; }       
+        h1, h2 { text-transform: uppercase; letter-spacing: 1px; }
+        .btn-action { display: inline-block; border: 1px solid #000; padding: 8px 15px; color: #000; text-decoration: none; font-size: 14px; margin-bottom: 20px; }
+        .btn-action:hover { background-color: #000000; color: #ffffff;}
+        .flex-section { display: flex; gap: 40px; margin-top: 20px; }
+        .column { flex: 1; }
+        .item-list { list-style: none; padding: 0; }
+        .item-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #e0e0e0; font-size: 15px; }
+        .btn-delete { color: red; text-decoration: none; font-size: 12px; border: 1px solid red; padding: 2px 6px; }
+        .btn-delete:hover { background-color: #ff0000; color: #ffffff}
+        .back-link { display: block; margin-top: 30px; color: #000; text-align: center; text-decoration: none;}
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    
+    <div class="dashboard-header">
+        <h1>MUSIC LIBRARY</h1>
+        <p>HI, <strong>{{ request.user.username | upper }}</strong>.</p>
+    </div>
+
+    <div class="flex-section">
+        
+        <div class="column">
+            <div class="column-header">
+                <h2>SONGS</h2>
+                <a href="{% url 'add_song' %}" class="btn-action">+ ADD SONG</a>
+            </div>
+            <ul class="item-list">
+                {% for song in songs %}
+                    <li>
+                        <span><strong>{{ song.title }}</strong> - {{ song.artist }}</span>
+                        <a href="{% url 'delete_song' song.pk %}" class="btn-delete">DELETE</a>
+                    </li>
+                {% empty %}
+                    <li>SONG DATABASE EMPTY</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="column">
+            <div class="column-header">
+                <h2>GENRE</h2>
+                <a href="{% url 'add_genre' %}" class="btn-action">+ ADD GENRE</a>
+            </div>
+            <ul class="item-list">
+                {% for genre in genres %}
+                    <li>
+                        <span>{{ genre.name }}</span>
+                        <a href="{% url 'delete_genre' genre.pk %}" class="btn-delete">DELETE</a>
+                    </li>
+                {% empty %}
+                    <li>GENRE DATABASE EMPTY</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+    <a href="/" class="back-link">HOME</a>
+</div>
+
+</body>
+</html>
+

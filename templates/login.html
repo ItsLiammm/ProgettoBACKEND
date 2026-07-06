@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - I AM MUSIC</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="login-box">
+        <h2>I AM MUSIC</h2>
+        
+        {% if form.errors %}
+            <p class="errorlist">Wrong username or password. Try again.</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">USERNAME:</label>
+                <input type="text" name="username" id="id_username" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password">PASSWORD:</label>
+                <input type="password" name="password" id="id_password" required>
+            </div>
+            <button type="submit" class="btn-submit">LOGIN</button>
+        </form>
+        <p><a href="{% url 'home' %}">BACK HOME</a></p>
+    </div>
+</body>
+</html>

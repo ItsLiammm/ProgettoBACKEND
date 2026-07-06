@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DELETE GENRE</title>
+    <style>
+        body { padding: 40px; background-color: #ffffff; font-family: 'Helvetica Neue', sans-serif;}
+        .delete-container { max-width: 500px; margin: 0 auto; border: 1px solid rgb(0, 0, 0); background: #fff; padding: 40px 30px; text-align: center; }
+        h1 {letter-spacing: 1px; color: rgb(0, 0, 0); margin-top: 0; }
+        p { font-size: 16px; line-height: 1.5; margin-bottom: 20px; }
+        .btn-delete {display: block; margin: 0 auto 20px auto; background: red; color: #fff; border: 1px solid red; padding: 10px 20px; cursor: pointer;}
+        .btn-delete:hover { background: #fff; color: red; }
+        .cancel-link { display: inline-block;color: #000; text-decoration: none; font-size: 15px; font-weight: bold;}
+        small{color: #666; display: block; margin-top: 10px;}
+    </style>
+</head>
+<body>
+
+<div class="delete-container">
+    <h1>DELETE GENRE</h1>
+    <p>ARE YOU SURE YOU WANT TO DELETE THIS GENRE <strong>"{{ object.name }}"</strong>?<br>
+    <small>DELEATING A GENRE WILL AFFECT SONGS ASSOCIATED WITH IT.</small></p> 
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn-delete">DELETE</button>
+        <a href="{% url 'curator_dashboard' %}" class="cancel-link">CANCEL</a>
+    </form>
+</div>
+
+</body>
+</html>
