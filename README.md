@@ -13,7 +13,7 @@ I AM MUSIC è un sito di streaming musicale dal design minimalistico bianco e ne
 * **Curator:** Ha le stesse feature dell'account Listener e in più ha una dashboard dedicata dove è possibile aggiungere eliminare e gestire canzoni e generi che aggiornano in tempo reale il database, nota: se viene eliminato un genere musicale, vengono eliminate a cascata tutte le canzoni relative a quel genere musicale.
 
 ## Local Installation
-1. Copia repository: `git clone [URL-DEL-TUO-REPO]`
+1. Copia repository: `git clone https://github.com/ItsLiammm/ProgettoBACKEND`
 2. Crea e attiva un ambiente virtuale.
 3. Installa dependencies: `pip install -r requirements.txt`
 4. Fai partire il server: `python manage.py runserver`
