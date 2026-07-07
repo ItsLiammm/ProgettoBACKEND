@@ -32,7 +32,7 @@ E' presente anche un account admin utilizzabile solo nella dashboard di django a
 
 ## Deployment
 Il sito è online e può essere testato qui:
-**[INSERISCI IL LINK AL SITO DEPLOYATO]**
+**ItsLiammmm.pythonanywhere.com**
 
 ## Testing Scenario
 1. Aprire il link di deployment.
