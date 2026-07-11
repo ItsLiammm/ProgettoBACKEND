@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-exuj$ng5@r*cdlbtcd1fm%iy6&(p28rw_-%e2#2&3#050ac+ud
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://ItsLiammmm.pythonanywhere.com']
 
 
 
